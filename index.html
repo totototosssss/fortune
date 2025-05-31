@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生年月日占い - あなただけのメッセージ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <h1 class="site-title">開運！暦占い</h1>
+            <p class="site-subtitle">あなたの生誕の日が示す、今日の導き</p>
+        </header>
+
+        <main class="main-content">
+            <div class="input-area" id="input-area">
+                <label for="birthdate" class="input-label">あなたの生年月日を教えてください</label>
+                <input type="date" id="birthdate" class="date-input">
+                <button id="submit-button" class="submit-button">運勢を占う</button>
+            </div>
+
+            <div class="result-area" id="result-area" style="display: none;">
+                <div class="loading-spinner" id="loading-spinner" style="display: none;"></div>
+
+                <div id="result-content" style="display: none;">
+                    <h2 class="result-title" id="result-title-text">今日のあなたの運勢</h2>
+
+                    <div class="special-message-20070101" id="special-message-20070101" style="display: none;">
+                        <div class="special-message-header">
+                            <span class="star-icon">🌟</span> 特別なあなたへ <span class="star-icon">🌟</span>
+                        </div>
+                        <p class="special-text-main" id="special-text-main"></p>
+                        <div class="quote-box">
+                            <p class="quote-text" id="special-quote-text"></p>
+                            <p class="nandeya-container">
+                                <span class="nandeya-highlight" id="emphasized-nandeya">なんでや</span>
+                            </p>
+                        </div>
+                        <p class="special-text-conclusion" id="special-text-conclusion"></p>
+                    </div>
+
+                    <div class="normal-message" id="normal-message">
+                        <p class="message-text" id="message-text-element"></p>
+                    </div>
+
+                    <div class="recommended-item-section">
+                        <h3 class="recommended-item-title">今日を彩るラッキーアイテム</h3>
+                        <div class="recommended-item" id="recommended-item">
+                            <p class="item-name" id="item-name-element">読み込み中...</p>
+                            <p class="item-description" id="item-description-element"></p>
+                            <a href="#" id="item-link" target="_blank" class="item-link" style="display:none;">詳しく見る</a>
+                        </div>
+                    </div>
+
+                    <button id="back-button" class="back-button">もう一度占う</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; <span id="current-year"></span> 暦占い製作委員会</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
