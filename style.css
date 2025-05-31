@@ -1,4 +1,3 @@
-/* style.css */
 :root {
     --font-serif: 'Shippori Mincho', serif;
     --font-sans: 'Zen Kaku Gothic New', sans-serif;
@@ -140,93 +139,117 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px; /* フィールド間の間隔を少し広げる */
+    gap: 28px;
 }
-/* ニックネームと日付入力の共通ラッパースタイル */
+
 .text-input-wrapper,
-.date-input-wrapper {
+.birthdate-fieldset {
     position: relative;
     width: 100%;
-    max-width: 350px; /* 最大幅を少し広げる */
+    max-width: 380px;
 }
-.input-label {
-    position: absolute;
-    left: 22px; /* パディングに合わせて調整 */
-    top: 50%;
-    transform: translateY(-50%);
+.birthdate-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+.fieldset-legend {
+    font-size: 0.9em;
     color: var(--color-text-subtle);
-    background-color: var(--color-container-bg); /* inputの背景色と同じ */
+    margin-bottom: 10px; /* 少し間隔をあける */
+    text-align: left;
+    padding-left: 2px; /* 微調整 */
+    font-weight: 500;
+    width: 100%; /* 幅いっぱいに */
+}
+.birthdate-input-group {
+    display: flex;
+    align-items: flex-start; /* ラベルと入力フィールドの高さが異なる場合を考慮 */
+    gap: 10px; /* 年月日の間のスペース */
+    justify-content: space-between;
+}
+.input-field-group {
+    position: relative;
+    flex: 1 1 auto;
+}
+.year-field { flex-basis: calc(40% - 5px); flex-grow: 2; } /* 年は少し広め */
+.month-field, .day-field { flex-basis: calc(30% - 5px); flex-grow: 1; }
+
+
+.text-input-wrapper .input-label,
+.input-field-group .input-label {
+    position: absolute;
+    left: 20px; /* パディングに合わせて調整 */
+    top: 21px;   /* フィールドのパディングに合わせて調整 */
+    transform: translateY(0); /* Y方向のtransformは不要に */
+    color: var(--color-text-subtle);
+    background-color: var(--color-container-bg);
     padding: 0 6px;
     transition: var(--transition-smooth);
     pointer-events: none;
-    font-size: 1em;
-    white-space: nowrap; /* ラベルが改行しないように */
+    font-size: 1em; /* 初期フォントサイズをフィールドと合わせる */
+    white-space: nowrap;
+    line-height: 1; /* ラベルの行の高さを調整 */
 }
-/* ニックネームと日付入力の共通入力フィールドスタイル */
+
 .text-input,
-.date-input {
+.number-input {
     width: 100%;
-    padding: 20px 22px; /* スマホでのタップしやすさのためパディング増やす */
-    font-size: 1.05em; /* スマホでの見やすさのためフォントサイズ少し上げる */
+    padding: 20px 18px; /* 上下パディングをしっかり確保 */
+    font-size: 16px; /* スマホでのズームを防ぐ最小サイズ */
     font-family: var(--font-sans);
     color: var(--color-text-main);
-    border: 2px solid rgba(176, 141, 87, 0.3); /* ボーダーを少し薄く */
+    border: 2px solid rgba(176, 141, 87, 0.4); /* ボーダーを少しはっきり */
     border-radius: var(--border-radius-sm);
     background-color: var(--color-container-bg);
     transition: var(--transition-smooth);
     box-sizing: border-box;
-    line-height: normal; /* input内のline-heightをリセット */
+    line-height: 1.4; /* 入力文字の行の高さを調整 */
+    text-align: center;
+    min-height: 60px; /* スマホでのタップ領域確保 */
+}
+.number-input {
+    -moz-appearance: textfield;
+}
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-/* 入力時/フォーカス時のラベル移動 (JSで付与するクラスで制御) */
 .text-input.has-value + .input-label,
 .text-input.is-focused + .input-label,
-.date-input.has-value + .input-label,
-.date-input.is-focused + .input-label {
-    top: -11px; /* 枠線にかぶるように調整 */
-    left: 18px;
-    font-size: 0.8em; /* ラベルの文字を少し小さく */
+.number-input.has-value + .input-label,
+.number-input.is-focused + .input-label {
+    top: -10px; /* 枠線の上に移動 */
+    left: 15px; /* 位置微調整 */
+    font-size: 0.8em;
     color: var(--color-primary-accent);
     font-weight: 500;
+    line-height: 1; /* 移動後のラベルの行の高さを調整 */
 }
 
-/* フォーカス時の入力フィールドのスタイル */
 .text-input.is-focused,
-.date-input.is-focused {
-    border-color: var(--color-primary-accent) !important; /* !importantで優先度上げる場合も */
+.number-input.is-focused {
+    border-color: var(--color-primary-accent);
     outline: none;
     box-shadow: 0 0 0 3px var(--color-highlight-glow);
-}
-/* valueがあるときの入力フィールドのスタイル (フォーカスが外れてもボーダー色を維持したい場合など) */
-.text-input.has-value,
-.date-input.has-value {
-   /* border-color: rgba(176, 141, 87, 0.6); /* 例：少し濃いボーダー */
+    background-color: #fff; /* フォーカス時に背景色を白に明示 */
 }
 
-
-/* input type="date" のネイティブプレースホルダーの色を薄くする試み */
-.date-input::-webkit-datetime-edit-year-field:not([aria-valuenow]),
-.date-input::-webkit-datetime-edit-month-field:not([aria-valuenow]),
-.date-input::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
-    color: #ccc; /* かなり薄いグレー */
-}
-/* Firefox用はより複雑なアプローチが必要な場合があり、今回はwebkit系に限定 */
-
-.date-input::-webkit-calendar-picker-indicator {
-    opacity: 0.7;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    filter: grayscale(50%) sepia(100%) hue-rotate(-20deg) saturate(300%) brightness(0.8);
-}
-.date-input:hover::-webkit-calendar-picker-indicator {
-    opacity: 1;
+.date-separator {
+    color: var(--color-text-subtle);
+    font-size: 1.2em;
+    align-self: center;
+    padding-top: 18px; /* フィールドの高さに合わせて調整 */
+    font-weight: 500;
 }
 
 .submit-button, .back-button {
     background: linear-gradient(135deg, var(--color-secondary-accent), #D9534F);
     color: #fff;
     border: none;
-    padding: 16px 32px; /* パディングを少し調整 */
+    padding: 16px 32px;
     border-radius: var(--border-radius-sm);
     font-size: 1.1em;
     font-weight: 500;
@@ -238,7 +261,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 230px; /* ボタン幅調整 */
+    min-width: 230px;
 }
 .submit-button .button-icon, .back-button .button-icon {
     margin-right: 10px;
@@ -253,7 +276,6 @@ body {
     background: linear-gradient(135deg, #D9534F, var(--color-secondary-accent));
 }
 
-/* (中略: 結果セクション、ローディングスピナーなどのスタイルは変更なし) */
 .result-section {
     animation: fadeInSection 0.8s ease-out;
     padding-top: 20px;
@@ -288,8 +310,7 @@ body {
 }
 .loading-spinner p { font-size: 1.1em; font-style: italic; font-weight: 500; }
 
-
-.result-title { /* ニックネームが入るので微調整の可能性 */
+.result-title {
     font-family: var(--font-serif);
     color: var(--color-secondary-accent);
     font-size: 2.2em;
@@ -297,10 +318,9 @@ body {
     margin-bottom: 30px;
     font-weight: 700;
 }
-#nickname-display { /* ニックネーム表示部分のスタイル */
-    color: var(--color-primary-accent); /* ニックネームの色をアクセントに */
+#nickname-display {
+    color: var(--color-primary-accent);
 }
-
 
 .special-message-20070101 {
     background: linear-gradient(145deg, #fffaf5, #fffefc);
@@ -321,7 +341,7 @@ body {
     text-align: center;
     margin-bottom: 25px;
 }
-#nickname-display-special { /* 特別メッセージ内のニックネーム */
+#nickname-display-special {
     color: var(--color-primary-accent);
 }
 
@@ -492,17 +512,41 @@ body {
 }
 
 @media (max-width: 768px) {
-    body { padding: 20px 15px; }
-    .container { padding: 25px 20px; } /* 横パディング調整 */
-    .site-title { font-size: 2.2em; }
+    .container { padding: 25px 20px; }
+    .site-title { font-size: 2.2em; } 
     .site-subtitle { font-size: 1em; }
     .input-title { font-size: 1.6em; }
     .input-guidance { font-size: 1em; }
+
     .text-input-wrapper,
-    .date-input-wrapper { max-width: 300px; } /* スマホでの最大幅調整 */
+    .birthdate-fieldset { max-width: 100%; } /* スマホでは横幅いっぱいを基本に */
+    
     .text-input,
-    .date-input { padding: 18px 20px; } /* スマホでのパディング調整 */
-    .submit-button, .back-button { padding: 14px 25px; font-size: 1em; min-width: 200px; }
+    .number-input { 
+        padding: 18px 15px; /* スマホ用パディング */
+        font-size: 16px; /* iOSズーム防止 */
+        min-height: 56px; /* 最低高さを確保 */
+    }
+    .text-input-wrapper .input-label,
+    .input-field-group .input-label {
+        left: 15px; /* スマホ用にラベル位置調整 */
+        top: 18px;  /* スマホ用にラベル位置調整 */
+        font-size: 16px; /* 初期ラベルサイズをフィールドと合わせる */
+    }
+    .text-input.has-value + .input-label,
+    .text-input.is-focused + .input-label,
+    .number-input.has-value + .input-label,
+    .number-input.is-focused + .input-label { 
+        font-size: 0.75em; /* スマホで上に移動したラベルのサイズ */
+        top: -9px; 
+        left: 12px;
+    }
+    .year-field { flex-basis: 38%; } 
+    .month-field, .day-field { flex-basis: 25%; }
+    .date-separator { padding-top: 16px; font-size: 1.1em; }
+
+
+    .submit-button, .back-button { padding: 15px 25px; font-size: 1.05em; min-width: 0; width: 100%; max-width: 300px; }
     .result-title { font-size: 1.9em; }
     .special-message-header { font-size: 1.3em; }
     .special-text-main, .special-text-conclusion, .normal-message .message-text { font-size: 1em; }
@@ -512,21 +556,27 @@ body {
     .item-name { font-size: 1.2em; }
     .item-fortune-message { font-size: 1em; }
 }
-@media (max-width: 480px) {
-    body { padding: 15px 10px; }
+@media (max-width: 400px) { /* さらに狭い画面用 */
     .container { padding: 20px 15px; }
-    .site-title { font-size: 1.9em; }
-    .input-title { font-size: 1.4em; }
-    .text-input-wrapper, /* スマホでは幅いっぱい */
-    .date-input-wrapper { max-width: 100%; } 
+    .site-title { font-size: 1.8em; }
+    .input-title { font-size: 1.3em; }
+    .text-input, .number-input { padding: 16px 12px; min-height: 52px; }
+    .birthdate-input-group { gap: 6px; }
+    .year-field { flex-basis: 36%; } 
+    .month-field, .day-field { flex-basis: 24%; }
+    .date-separator { font-size: 1em; padding-top: 15px; }
+    
+    .text-input-wrapper .input-label,
+    .input-field-group .input-label {
+        left: 12px; 
+        top: 16px;  
+    }
     .text-input.has-value + .input-label,
     .text-input.is-focused + .input-label,
-    .date-input.has-value + .input-label,
-    .date-input.is-focused + .input-label { font-size: 0.75em; top: -10px; left: 15px; }
-    .text-input, .date-input { font-size: 1em; padding: 16px 18px; } /* スマホでの入力フィールドのパディング調整 */
-    .special-message-20070101 { padding: 20px; }
-    .quote-box { padding: 15px; }
-    .recommended-item { flex-direction: column; align-items: center; text-align: center; }
-    .item-icon-container { margin-right: 0; margin-bottom: 15px; }
-    .item-details { width: 100%; }
+    .number-input.has-value + .input-label,
+    .number-input.is-focused + .input-label { 
+        font-size: 0.7em; 
+        top: -8px; 
+        left: 10px;
+    }
 }
