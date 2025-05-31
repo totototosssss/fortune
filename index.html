@@ -23,13 +23,28 @@
                 <p class="input-guidance">あなたのニックネームと生年月日を選んでください。<br>今日を素敵に過ごすためのヒントをお届けします。</p>
                 <div class="input-area" id="input-area">
                     <div class="text-input-wrapper">
-                        <input type="text" id="nickname" class="text-input" required>
+                        <input type="text" id="nickname" class="text-input" required placeholder=" ">
                         <label for="nickname" class="input-label">ニックネーム</label>
                     </div>
-                    <div class="date-input-wrapper">
-                        <input type="date" id="birthdate" class="date-input" required>
-                        <label for="birthdate" class="input-label">生年月日</label>
-                    </div>
+                    <fieldset class="birthdate-fieldset">
+                        <legend class="fieldset-legend">生年月日</legend>
+                        <div class="birthdate-input-group">
+                            <div class="input-field-group year-field">
+                                <input type="number" id="birthYear" class="number-input" required placeholder=" " min="1900" max="2099">
+                                <label for="birthYear" class="input-label">年</label>
+                            </div>
+                            <span class="date-separator">/</span>
+                            <div class="input-field-group month-field">
+                                <input type="number" id="birthMonth" class="number-input" required placeholder=" " min="1" max="12">
+                                <label for="birthMonth" class="input-label">月</label>
+                            </div>
+                            <span class="date-separator">/</span>
+                            <div class="input-field-group day-field">
+                                <input type="number" id="birthDay" class="number-input" required placeholder=" " min="1" max="31">
+                                <label for="birthDay" class="input-label">日</label>
+                            </div>
+                        </div>
+                    </fieldset>
                     <button id="submit-button" class="submit-button">
                         <span class="button-icon star-icon">✉️</span>結果を見る
                     </button>
@@ -89,7 +104,7 @@
 
         <footer class="site-footer">
             <div class="footer-ornament"></div>
-            <p>&copy; <span id="current-year"></span> 暦占い製作委員会</p>
+            <p>&copy; <span id="current-year"></span> 今日の暦占い製作委員会</p>
         </footer>
     </div>
     <script src="script.js"></script>
