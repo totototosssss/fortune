@@ -12,7 +12,7 @@
     <div class="container">
         <header class="site-header">
             <div class="header-ornament top"></div>
-            <h1 class="site-title">今日の暦（こよみ）占い</h1>
+            <h1 class="site-title">暦（こよみ）占い</h1>
             <p class="site-subtitle">生年月日から、今日のヒントとメッセージをお届けします。</p>
             <div class="header-ornament bottom"></div>
         </header>
@@ -20,11 +20,15 @@
         <main class="main-content">
             <section class="input-section" id="input-section">
                 <h2 class="input-title">占いを始める</h2>
-                <p class="input-guidance">あなたの特別な日を選んでください。<br>今日を素敵に過ごすためのヒントをお届けします。</p>
+                <p class="input-guidance">あなたのニックネームと生年月日を選んでください。<br>今日を素敵に過ごすためのヒントをお届けします。</p>
                 <div class="input-area" id="input-area">
+                    <div class="text-input-wrapper">
+                        <input type="text" id="nickname" class="text-input" required>
+                        <label for="nickname" class="input-label">ニックネーム</label>
+                    </div>
                     <div class="date-input-wrapper">
                         <input type="date" id="birthdate" class="date-input" required>
-                        <label for="birthdate" class="input-label">生年月日 (例: 2000/01/01)</label>
+                        <label for="birthdate" class="input-label">生年月日</label>
                     </div>
                     <button id="submit-button" class="submit-button">
                         <span class="button-icon star-icon">✉️</span>結果を見る
@@ -39,11 +43,11 @@
                 </div>
 
                 <div id="result-content" style="display: none;">
-                    <h2 class="result-title" id="result-title-text">あなたへのメッセージ</h2>
+                    <h2 class="result-title"><span id="nickname-display">あなた</span>へのメッセージ</h2>
 
                     <article class="special-message-20070101" id="special-message-20070101" style="display: none;">
                         <header class="special-message-header">
-                            <span class="decorative-icon left">🌟</span> 2007年1月1日生まれのあなたへ <span class="decorative-icon right">🌟</span>
+                            <span class="decorative-icon left">🌟</span> <span id="nickname-display-special">2007年1月1日生まれのあなた</span>へ <span class="decorative-icon right">🌟</span>
                         </header>
                         <p class="special-text-main" id="special-text-main"></p>
                         <blockquote class="quote-box">
@@ -85,7 +89,7 @@
 
         <footer class="site-footer">
             <div class="footer-ornament"></div>
-            <p>&copy; <span id="current-year"></span> 今日の暦占い製作委員会</p>
+            <p>&copy; <span id="current-year"></span> 暦占い製作委員会</p>
         </footer>
     </div>
     <script src="script.js"></script>
