@@ -1,7 +1,8 @@
-// script.js
 document.addEventListener('DOMContentLoaded', () => {
-    const nicknameInput = document.getElementById('nickname'); // ニックネーム入力
-    const birthdateInput = document.getElementById('birthdate');
+    const nicknameInput = document.getElementById('nickname');
+    const birthYearInput = document.getElementById('birthYear');
+    const birthMonthInput = document.getElementById('birthMonth');
+    const birthDayInput = document.getElementById('birthDay');
     const submitButton = document.getElementById('submit-button');
     
     const inputSection = document.getElementById('input-section');
@@ -10,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingSpinner = document.getElementById('loading-spinner');
     const resultContent = document.getElementById('result-content');
 
-    // 結果表示タイトル内のニックネーム表示用span
     const nicknameDisplayElement = document.getElementById('nickname-display');
     const nicknameDisplaySpecialElement = document.getElementById('nickname-display-special');
     
@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         conclusion: `──その知性と違和感のはざまで、あなたは「本物の自己理解」を掴みかけています。焦らずに、今年は“知の再構築”をテーマに過ごしましょう。心の奥にある「なんでや」に、意味が宿る年です。`
     };
 
-    // フローティングラベル制御用の関数
     function setupInputLabelControl(inputElement) {
         const updateState = () => {
             if (inputElement.value) {
@@ -53,52 +52,96 @@ document.addEventListener('DOMContentLoaded', () => {
         inputElement.addEventListener('focus', () => inputElement.classList.add('is-focused'));
         inputElement.addEventListener('blur', () => {
             inputElement.classList.remove('is-focused');
-            updateState(); // フォーカスが外れたときも最終状態をチェック
+            updateState();
         });
-        updateState(); // 初期ロード時にも実行
+        updateState();
     }
 
     setupInputLabelControl(nicknameInput);
-    setupInputLabelControl(birthdateInput);
+    setupInputLabelControl(birthYearInput);
+    setupInputLabelControl(birthMonthInput);
+    setupInputLabelControl(birthDayInput);
 
 
     submitButton.addEventListener('click', async () => {
         const nicknameValue = nicknameInput.value.trim();
-        const birthdateValue = birthdateInput.value;
+        const yearValue = birthYearInput.value;
+        const monthValue = birthMonthInput.value;
+        const dayValue = birthDayInput.value;
 
         let allValid = true;
+        let firstInvalidField = null;
+
         if (!nicknameValue) {
-            nicknameInput.focus();
             nicknameInput.style.borderColor = 'var(--color-secondary-accent)';
             setTimeout(() => { nicknameInput.style.borderColor = ''; }, 1500);
+            if (!firstInvalidField) firstInvalidField = nicknameInput;
             allValid = false;
         }
-        if (!birthdateValue) {
-            birthdateInput.focus();
-            birthdateInput.style.borderColor = 'var(--color-secondary-accent)';
-            setTimeout(() => { birthdateInput.style.borderColor = ''; }, 1500);
+        if (!yearValue) {
+            birthYearInput.style.borderColor = 'var(--color-secondary-accent)';
+            setTimeout(() => { birthYearInput.style.borderColor = ''; }, 1500);
+            if (!firstInvalidField) firstInvalidField = birthYearInput;
             allValid = false;
         }
-        if (!allValid) return;
+        if (!monthValue) {
+            birthMonthInput.style.borderColor = 'var(--color-secondary-accent)';
+            setTimeout(() => { birthMonthInput.style.borderColor = ''; }, 1500);
+            if (!firstInvalidField) firstInvalidField = birthMonthInput;
+            allValid = false;
+        }
+        if (!dayValue) {
+            birthDayInput.style.borderColor = 'var(--color-secondary-accent)';
+            setTimeout(() => { birthDayInput.style.borderColor = ''; }, 1500);
+            if (!firstInvalidField) firstInvalidField = birthDayInput;
+            allValid = false;
+        }
+
+        if (!allValid) {
+            if (firstInvalidField) firstInvalidField.focus();
+            return;
+        }
         
-        const safeNickname = nicknameValue || "あなた"; // 空の場合のデフォルト
+        const year = parseInt(yearValue);
+        const month = parseInt(monthValue);
+        const day = parseInt(dayValue);
+        const currentYear = new Date().getFullYear();
+
+        if (year < 1900 || year > currentYear || month < 1 || month > 12 || day < 1 || day > 31) {
+            alert("正しい生年月日を入力してください。\n(例: 年は1900年から今年まで、月は1-12、日は1-31)");
+            if (year < 1900 || year > currentYear) birthYearInput.focus();
+            else if (month < 1 || month > 12) birthMonthInput.focus();
+            else if (day < 1 || day > 31) birthDayInput.focus();
+            return;
+        }
+        const tempDate = new Date(year, month - 1, day);
+        if (tempDate.getFullYear() !== year || tempDate.getMonth() !== month - 1 || tempDate.getDate() !== day) {
+            alert("存在しない日付です。正しい生年月日を入力してください。");
+            birthDayInput.focus();
+            return;
+        }
+
+
+        const paddedMonth = String(month).padStart(2, '0');
+        const paddedDay = String(day).padStart(2, '0');
+        const birthdateValue = `${year}-${paddedMonth}-${paddedDay}`;
+        
+        const safeNickname = nicknameValue || "あなた";
 
         inputSection.style.display = 'none';
         resultSection.style.display = 'block'; 
         loadingSpinner.style.display = 'flex'; 
         resultContent.style.display = 'none'; 
 
-        // ニックネームを結果タイトルに設定
         nicknameDisplayElement.textContent = `${safeNickname}さん`;
         nicknameDisplaySpecialElement.textContent = `${safeNickname}さん (2007年1月1日)`;
-
 
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         if (birthdateValue === specialBirthdate) {
-            displaySpecialMessage(safeNickname); // ニックネームを渡す
+            displaySpecialMessage(safeNickname);
         } else {
-            displayNormalMessage(birthdateValue, safeNickname); // ニックネームを渡す
+            displayNormalMessage(birthdateValue, safeNickname);
         }
         
         await fetchLuckyItem(birthdateValue);
@@ -112,10 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
         resultSection.style.display = 'none';
         inputSection.style.display = 'block'; 
         nicknameInput.value = '';
-        birthdateInput.value = '';
-        // ラベルの状態をリセット
-        nicknameInput.classList.remove('has-value', 'is-focused');
-        birthdateInput.classList.remove('has-value', 'is-focused');
+        birthYearInput.value = '';
+        birthMonthInput.value = '';
+        birthDayInput.value = '';
+        
+        [nicknameInput, birthYearInput, birthMonthInput, birthDayInput].forEach(input => {
+            input.classList.remove('has-value', 'is-focused');
+        });
         
         specialMessageDiv.style.display = 'none';
         normalMessageDiv.style.display = 'none';
@@ -124,22 +170,20 @@ document.addEventListener('DOMContentLoaded', () => {
         inputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    function displaySpecialMessage(nickname) { // ニックネームを受け取る
+    function displaySpecialMessage(nickname) {
         specialMessageDiv.style.display = 'block';
         normalMessageDiv.style.display = 'none';
-        // メッセージ内でニックネームを使いたい場合は、ここのテキスト生成を動的にする
-        // 今回はヘッダーでのみ使用
         specialTextMainElement.innerText = specialMessages.main;
         specialQuoteTextElement.innerText = specialMessages.quote;
         emphasizedNandeyaElement.innerText = "なんでや"; 
         specialTextConclusionElement.innerText = specialMessages.conclusion;
     }
 
-    function displayNormalMessage(birthdate, nickname) { // ニックネームを受け取る
+    function displayNormalMessage(birthdate, nickname) {
         specialMessageDiv.style.display = 'none';
         normalMessageDiv.style.display = 'block';
         const seed = generateSeed(birthdate);
-        const fortuneMessage = getFortuneMessage(seed, nickname); // ニックネームを渡す
+        const fortuneMessage = getFortuneMessage(seed, nickname);
         normalMessageTextElement.innerText = fortuneMessage;
     }
 
@@ -153,16 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.abs(seed);
     }
 
-    function getFortuneMessage(seed, nickname) { // ニックネームを受け取る
+    function getFortuneMessage(seed, nickname) {
         const messages = [
             `、星々の旋律が、あなたの魂に新たな調和をもたらすでしょう。今日は内なる声に耳を澄ませ、直感を信じて行動する日です。思いがけない閃きが、未来への扉を開きます。`,
             `、金色の光があなたのオーラを包み込み、幸運が雪崩のように舞い込む予感。特に人間関係において、素晴らしい縁が結ばれるでしょう。感謝の言葉が、さらなる福を呼びます。`,
             `、天空の叡智が降り注ぎ、あなたの知性が冴えわたる一日。難解な問題も、今日のあなたなら容易く解き明かせるはず。学びの機会を大切に。`,
             `、内に秘めた情熱の炎が、より一層強く燃え上がるのを感じるでしょう。そのエネルギーを創造的な活動に注げば、目覚ましい成果が期待できます。`,
             `、運命の糸が複雑に絡み合い、ドラマティックな出来事が起こるかもしれません。変化を恐れず、流れに身を任せることで、新たな自分と出会えるでしょう。`
-            // メッセージのバリエーションを増やす場合はここに追加
         ];
-        // (ニックネームで呼びかけるために、メッセージの先頭にスペースを追加し、ニックネームを結合)
         const baseMessage = messages[seed % messages.length];
 
         const luckyCharms = ["清らかな水晶", "黄金の羽根ペン", "星影のオルゴール", "月長石の髪飾り", "太陽の護符", "七色のプリズム", "森の雫のアミュレット", "不死鳥の涙"];
@@ -202,8 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const selectedCatalog = luckyItemCatalogs[seed % luckyItemCatalogs.length];
         const searchTerm = selectedCatalog.searchTerms[seed % selectedCatalog.searchTerms.length];
-        const birthYear = parseInt(birthdate.split('-')[0]);
-        const queryKeyword = `${birthYear}年 ${searchTerm}`;
+        const birthYearValue = parseInt(birthdate.split('-')[0]);
+        const queryKeyword = `${birthYearValue}年 ${searchTerm}`;
         
         itemMainIconElement.innerText = selectedCatalog.icon;
         itemCategoryElement.innerText = `カテゴリ：${selectedCatalog.category}`;
