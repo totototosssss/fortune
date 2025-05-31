@@ -1,17 +1,14 @@
 /* style.css */
 :root {
-    --font-serif: 'Shippori Mincho', serif; /* 和風で上品な明朝体 */
-    --font-sans: 'Zen Kaku Gothic New', sans-serif; /* モダンな角ゴシック */
-
-    --color-bg: #F8F5F0; /* 温かみのあるオフホワイト */
+    --font-serif: 'Shippori Mincho', serif;
+    --font-sans: 'Zen Kaku Gothic New', sans-serif;
+    --color-bg: #F8F5F0;
     --color-container-bg: #FFFFFF;
-    --color-text-main: #3D322C; /* 深みのある茶色 */
+    --color-text-main: #3D322C;
     --color-text-subtle: #7A6A5D;
-    
-    --color-primary-accent: #B08D57; /* 落ち着いたゴールド */
-    --color-secondary-accent: #C0392b; /* 深紅、めでたさ */
-    --color-highlight-glow: rgba(210, 165, 80, 0.3); /* ゴールド系の輝き */
-
+    --color-primary-accent: #B08D57;
+    --color-secondary-accent: #C0392b;
+    --color-highlight-glow: rgba(210, 165, 80, 0.3);
     --border-radius-md: 12px;
     --border-radius-sm: 8px;
     --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.08);
@@ -19,7 +16,6 @@
     --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* 吉祥文様風背景 (青海波をモダンにアレンジ) */
 .site-background {
     position: fixed;
     top: 0;
@@ -35,17 +31,16 @@
         radial-gradient(circle at 100% 0%, transparent 20px, var(--color-primary-accent) 21px, var(--color-primary-accent) 23px, transparent 24px),
         radial-gradient(circle at 0% 0%, transparent 20px, var(--color-primary-accent) 21px, var(--color-primary-accent) 23px, transparent 24px);
     background-size: 60px 60px;
-    filter: blur(1px); /* 少しぼかして上品に */
+    filter: blur(1px);
 }
-
 
 body {
     font-family: var(--font-sans);
-    background-color: transparent; /* 背景は.site-backgroundに任せる */
+    background-color: transparent;
     margin: 0;
-    padding: 30px 20px; /* 上下にもパディング */
+    padding: 30px 20px;
     display: flex;
-    flex-direction: column; /* ヘッダーとメインコンテンツを縦に */
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     color: var(--color-text-main);
@@ -58,16 +53,16 @@ body {
     background-color: var(--color-container-bg);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-strong);
-    border: 1px solid rgba(176, 141, 87, 0.2); /* ゴールド系の薄いボーダー */
+    border: 1px solid rgba(176, 141, 87, 0.2);
     padding: 30px 40px 40px 40px;
     width: 100%;
-    max-width: 800px; /* 少し幅広に */
+    max-width: 800px;
     text-align: center;
     animation: fadeInSite 1s ease-out;
     position: relative;
     overflow: hidden; 
 }
-.container::before { /* コンテナ上部のアクセントライン */
+.container::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -99,27 +94,26 @@ body {
 .site-title {
     font-family: var(--font-serif);
     color: var(--color-secondary-accent);
-    font-size: 2.8em; /* Shippori Minchoは少し小さめなので調整 */
+    font-size: 2.8em;
     font-weight: 700;
     margin: 0 0 12px 0;
-    letter-spacing: 2px; /* 文字間隔を広めに */
+    letter-spacing: 2px;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
 }
 .site-subtitle {
     font-size: 1.1em;
     color: var(--color-text-subtle);
     margin: 0;
-    font-style: normal; /* イタリック解除 */
+    font-style: normal;
     font-weight: 500;
 }
 
-/* 入力セクション */
 .input-section {
     padding: 30px 20px;
     margin-bottom: 30px;
-    background-color: rgba(248, 245, 240, 0.5); /* 薄い背景 */
+    background-color: rgba(248, 245, 240, 0.5);
     border-radius: var(--border-radius-sm);
-    animation: fadeInSection 0.8s 0.2s ease-out backwards; /* 遅延開始 */
+    animation: fadeInSection 0.8s 0.2s ease-out backwards;
 }
 @keyframes fadeInSection {
     from { opacity: 0; transform: translateY(15px); }
@@ -146,67 +140,93 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px; /* 要素間の間隔 */
+    gap: 28px; /* フィールド間の間隔を少し広げる */
 }
+/* ニックネームと日付入力の共通ラッパースタイル */
+.text-input-wrapper,
 .date-input-wrapper {
     position: relative;
     width: 100%;
-    max-width: 320px; /* 入力フィールドの最大幅 */
+    max-width: 350px; /* 最大幅を少し広げる */
 }
-.input-label { /* フローティングラベル */
+.input-label {
     position: absolute;
-    left: 20px;
+    left: 22px; /* パディングに合わせて調整 */
     top: 50%;
     transform: translateY(-50%);
     color: var(--color-text-subtle);
-    background-color: var(--color-container-bg);
+    background-color: var(--color-container-bg); /* inputの背景色と同じ */
     padding: 0 6px;
     transition: var(--transition-smooth);
-    pointer-events: none; /* ラベルがクリックイベントを奪わないように */
+    pointer-events: none;
     font-size: 1em;
+    white-space: nowrap; /* ラベルが改行しないように */
 }
+/* ニックネームと日付入力の共通入力フィールドスタイル */
+.text-input,
 .date-input {
     width: 100%;
-    padding: 18px 20px;
-    font-size: 1em;
+    padding: 20px 22px; /* スマホでのタップしやすさのためパディング増やす */
+    font-size: 1.05em; /* スマホでの見やすさのためフォントサイズ少し上げる */
     font-family: var(--font-sans);
     color: var(--color-text-main);
-    border: 2px solid rgba(176, 141, 87, 0.4); /* ゴールド系の薄いボーダー */
+    border: 2px solid rgba(176, 141, 87, 0.3); /* ボーダーを少し薄く */
     border-radius: var(--border-radius-sm);
     background-color: var(--color-container-bg);
     transition: var(--transition-smooth);
-    box-sizing: border-box; /* paddingとborderを幅に含める */
+    box-sizing: border-box;
+    line-height: normal; /* input内のline-heightをリセット */
 }
-.date-input:focus,
-.date-input:valid { /* :valid を使うことで日付が選択されたらラベルを上げる */
-    border-color: var(--color-primary-accent);
-    outline: none;
-    box-shadow: 0 0 0 3px var(--color-highlight-glow);
-}
-.date-input:focus + .input-label,
-.date-input:valid + .input-label {
-    top: -10px; /* ラベルを枠の上に移動 */
-    left: 15px;
-    font-size: 0.8em;
+
+/* 入力時/フォーカス時のラベル移動 (JSで付与するクラスで制御) */
+.text-input.has-value + .input-label,
+.text-input.is-focused + .input-label,
+.date-input.has-value + .input-label,
+.date-input.is-focused + .input-label {
+    top: -11px; /* 枠線にかぶるように調整 */
+    left: 18px;
+    font-size: 0.8em; /* ラベルの文字を少し小さく */
     color: var(--color-primary-accent);
     font-weight: 500;
 }
-.date-input::-webkit-calendar-picker-indicator { /* カレンダーアイコンのスタイル */
+
+/* フォーカス時の入力フィールドのスタイル */
+.text-input.is-focused,
+.date-input.is-focused {
+    border-color: var(--color-primary-accent) !important; /* !importantで優先度上げる場合も */
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-highlight-glow);
+}
+/* valueがあるときの入力フィールドのスタイル (フォーカスが外れてもボーダー色を維持したい場合など) */
+.text-input.has-value,
+.date-input.has-value {
+   /* border-color: rgba(176, 141, 87, 0.6); /* 例：少し濃いボーダー */
+}
+
+
+/* input type="date" のネイティブプレースホルダーの色を薄くする試み */
+.date-input::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+.date-input::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+.date-input::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: #ccc; /* かなり薄いグレー */
+}
+/* Firefox用はより複雑なアプローチが必要な場合があり、今回はwebkit系に限定 */
+
+.date-input::-webkit-calendar-picker-indicator {
     opacity: 0.7;
     cursor: pointer;
     transition: var(--transition-smooth);
-    filter: grayscale(50%) sepia(100%) hue-rotate(-20deg) saturate(300%) brightness(0.8); /* ゴールド風に調整 */
+    filter: grayscale(50%) sepia(100%) hue-rotate(-20deg) saturate(300%) brightness(0.8);
 }
 .date-input:hover::-webkit-calendar-picker-indicator {
     opacity: 1;
 }
 
-
 .submit-button, .back-button {
-    background: linear-gradient(135deg, var(--color-secondary-accent), #D9534F); /* 赤系のグラデーション */
+    background: linear-gradient(135deg, var(--color-secondary-accent), #D9534F);
     color: #fff;
     border: none;
-    padding: 15px 30px;
+    padding: 16px 32px; /* パディングを少し調整 */
     border-radius: var(--border-radius-sm);
     font-size: 1.1em;
     font-weight: 500;
@@ -215,16 +235,16 @@ body {
     transition: var(--transition-smooth);
     box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
     letter-spacing: 0.5px;
-    display: inline-flex; /* アイコンとテキストの整列 */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 220px; /* ボタンの最小幅 */
+    min-width: 230px; /* ボタン幅調整 */
 }
 .submit-button .button-icon, .back-button .button-icon {
     margin-right: 10px;
     font-size: 1.2em;
 }
-.star-icon { color: #FFD700; } /* 星アイコンはゴールド */
+.star-icon { color: #FFD700; }
 .reset-icon { font-weight: bold; }
 
 .submit-button:hover, .back-button:hover {
@@ -233,7 +253,7 @@ body {
     background: linear-gradient(135deg, #D9534F, var(--color-secondary-accent));
 }
 
-/* 結果セクション */
+/* (中略: 結果セクション、ローディングスピナーなどのスタイルは変更なし) */
 .result-section {
     animation: fadeInSection 0.8s ease-out;
     padding-top: 20px;
@@ -246,7 +266,7 @@ body {
     padding: 50px 0;
     color: var(--color-text-subtle);
 }
-.spinner-core { /* ローディングスピナー変更 */
+.spinner-core {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -269,7 +289,7 @@ body {
 .loading-spinner p { font-size: 1.1em; font-style: italic; font-weight: 500; }
 
 
-.result-title {
+.result-title { /* ニックネームが入るので微調整の可能性 */
     font-family: var(--font-serif);
     color: var(--color-secondary-accent);
     font-size: 2.2em;
@@ -277,11 +297,14 @@ body {
     margin-bottom: 30px;
     font-weight: 700;
 }
+#nickname-display { /* ニックネーム表示部分のスタイル */
+    color: var(--color-primary-accent); /* ニックネームの色をアクセントに */
+}
 
-/* 2007/1/1 特別メッセージ (高級感に合わせて調整) */
+
 .special-message-20070101 {
-    background: linear-gradient(145deg, #fffaf5, #fffefc); /* より淡く上品な背景 */
-    border: 1px solid var(--color-primary-accent); /* 枠線を細く */
+    background: linear-gradient(145deg, #fffaf5, #fffefc);
+    border: 1px solid var(--color-primary-accent);
     border-left: 5px solid var(--color-primary-accent);
     border-radius: var(--border-radius-md);
     padding: 30px 35px;
@@ -298,6 +321,10 @@ body {
     text-align: center;
     margin-bottom: 25px;
 }
+#nickname-display-special { /* 特別メッセージ内のニックネーム */
+    color: var(--color-primary-accent);
+}
+
 .decorative-icon {
     color: var(--color-primary-accent);
     font-size: 1.2em;
@@ -305,14 +332,14 @@ body {
     opacity: 0.8;
 }
 .special-text-main, .special-text-conclusion {
-    font-size: 1.05em; /* 本文フォントサイズは読みやすさ重視 */
+    font-size: 1.05em;
     line-height: 1.85;
     margin-bottom: 20px;
     white-space: pre-wrap;
     color: var(--color-text-main);
 }
 .quote-box {
-    background-color: rgba(176, 141, 87, 0.05); /* ゴールドの薄い背景 */
+    background-color: rgba(176, 141, 87, 0.05);
     border-left: 3px solid var(--color-primary-accent);
     padding: 20px;
     margin: 25px 0;
@@ -321,8 +348,8 @@ body {
     border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 }
 .nandeya-highlight {
-    font-size: 1.8em; /* 少し調整 */
-    font-weight: 700; /* 太字 */
+    font-size: 1.8em;
+    font-weight: 700;
     color: #fff;
     background: var(--color-secondary-accent);
     padding: 8px 15px;
@@ -331,23 +358,21 @@ body {
     box-shadow: 0 3px 10px rgba(192, 57, 43, 0.5);
     animation: nandeyaShine 1.5s infinite alternate;
     font-style: normal;
-    font-family: var(--font-sans); /* 強調部分はゴシックに */
+    font-family: var(--font-sans);
 }
-@keyframes nandeyaShine { /* よりリッチなアニメーション */
+@keyframes nandeyaShine {
     0% { transform: scale(1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
     50% { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.7); }
     100% { transform: scale(1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 }
 
-
-/* 通常メッセージ */
 .normal-message .message-text {
     font-size: 1.15em;
     line-height: 1.85;
     color: var(--color-text-main);
     margin-bottom: 35px;
     padding: 25px 30px;
-    background-color: #fdfaf6; /* わずかに色づいた背景 */
+    background-color: #fdfaf6;
     border-radius: var(--border-radius-md);
     border: 1px solid rgba(176, 141, 87, 0.15);
     border-left: 5px solid var(--color-primary-accent);
@@ -355,7 +380,7 @@ body {
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
 }
 
-.result-separator { /* 区切り線 */
+.result-separator {
     text-align: center;
     margin: 40px auto;
     width: 80%;
@@ -363,7 +388,7 @@ body {
     height: 1px;
     background: linear-gradient(to right, transparent, rgba(176, 141, 87, 0.5), transparent);
 }
-.ornament-shape { /* 区切り線の中央の飾り */
+.ornament-shape {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -374,8 +399,6 @@ body {
     color: var(--color-primary-accent);
 }
 
-
-/* ラッキーアイテム セクション */
 .recommended-item-section {
     margin-top: 35px;
     padding-top: 30px;
@@ -394,15 +417,15 @@ body {
     box-shadow: var(--shadow-soft);
     border: 1px solid rgba(176, 141, 87, 0.2);
     display: flex;
-    align-items: flex-start; /* アイコンとテキストの上端揃え */
+    align-items: flex-start;
     text-align: left;
 }
-.item-icon-container { /* アイコンのコンテナ */
-    min-width: 50px; /* 幅を確保 */
+.item-icon-container {
+    min-width: 50px;
     margin-right: 25px;
-    margin-top: 5px; /* 微調整 */
+    margin-top: 5px;
 }
-.item-main-icon { /* メインのアイテムアイコン */
+.item-main-icon {
     font-size: 2.5em;
     color: var(--color-primary-accent);
     text-shadow: 0 0 12px var(--color-highlight-glow);
@@ -422,7 +445,7 @@ body {
     margin-bottom: 6px;
     font-weight: 500;
 }
-.item-name { /* h4 に変更したのでスタイル調整 */
+.item-name {
     font-size: 1.3em;
     font-weight: 700;
     font-family: var(--font-serif);
@@ -449,11 +472,10 @@ body {
     box-shadow: 0 3px 8px rgba(176, 141, 87, 0.3);
 }
 .item-link:hover {
-    background: #A07D47; /* 少し暗いゴールド */
+    background: #A07D47;
     box-shadow: 0 5px 12px rgba(176, 141, 87, 0.4);
     transform: translateY(-1px);
 }
-
 
 .site-footer {
     margin-top: 45px;
@@ -469,15 +491,17 @@ body {
     width: 50%;
 }
 
-/* スマホ対応調整 */
 @media (max-width: 768px) {
     body { padding: 20px 15px; }
-    .container { padding: 25px 30px; }
-    .site-title { font-size: 2.2em; } /* Shippori Minchoは少し小さめなので調整 */
+    .container { padding: 25px 20px; } /* 横パディング調整 */
+    .site-title { font-size: 2.2em; }
     .site-subtitle { font-size: 1em; }
     .input-title { font-size: 1.6em; }
     .input-guidance { font-size: 1em; }
-    .date-input-wrapper { max-width: 280px; }
+    .text-input-wrapper,
+    .date-input-wrapper { max-width: 300px; } /* スマホでの最大幅調整 */
+    .text-input,
+    .date-input { padding: 18px 20px; } /* スマホでのパディング調整 */
     .submit-button, .back-button { padding: 14px 25px; font-size: 1em; min-width: 200px; }
     .result-title { font-size: 1.9em; }
     .special-message-header { font-size: 1.3em; }
@@ -491,11 +515,15 @@ body {
 @media (max-width: 480px) {
     body { padding: 15px 10px; }
     .container { padding: 20px 15px; }
-    .site-title { font-size: 1.9em; } /* Shippori Minchoは少し小さめなので調整 */
+    .site-title { font-size: 1.9em; }
     .input-title { font-size: 1.4em; }
-    .date-input-wrapper { max-width: 100%; } /* スマホでは幅いっぱい */
-    .date-input:focus + .input-label,
-    .date-input:valid + .input-label { font-size: 0.75em; }
+    .text-input-wrapper, /* スマホでは幅いっぱい */
+    .date-input-wrapper { max-width: 100%; } 
+    .text-input.has-value + .input-label,
+    .text-input.is-focused + .input-label,
+    .date-input.has-value + .input-label,
+    .date-input.is-focused + .input-label { font-size: 0.75em; top: -10px; left: 15px; }
+    .text-input, .date-input { font-size: 1em; padding: 16px 18px; } /* スマホでの入力フィールドのパディング調整 */
     .special-message-20070101 { padding: 20px; }
     .quote-box { padding: 15px; }
     .recommended-item { flex-direction: column; align-items: center; text-align: center; }
