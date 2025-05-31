@@ -1,345 +1,504 @@
 /* style.css */
 :root {
-    --primary-color: #ff6b6b; /* メインのめでたい色 (コーラルレッド系) */
-    --secondary-color: #feca57; /* アクセントのめでたい色 (ゴールド系) */
-    --text-color: #3d3d3d; /* 基本テキスト色 */
-    --background-color: #fffaf0; /* 背景色 (フローラルホワイト) */
-    --container-background: #ffffff;
-    --border-radius: 12px;
-    --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    --font-main: 'Noto Sans JP', sans-serif;
-    --font-title: 'Playfair Display', serif;
+    --font-serif: 'Shippori Mincho', serif; /* 和風で上品な明朝体 */
+    --font-sans: 'Zen Kaku Gothic New', sans-serif; /* モダンな角ゴシック */
+
+    --color-bg: #F8F5F0; /* 温かみのあるオフホワイト */
+    --color-container-bg: #FFFFFF;
+    --color-text-main: #3D322C; /* 深みのある茶色 */
+    --color-text-subtle: #7A6A5D;
+    
+    --color-primary-accent: #B08D57; /* 落ち着いたゴールド */
+    --color-secondary-accent: #C0392b; /* 深紅、めでたさ */
+    --color-highlight-glow: rgba(210, 165, 80, 0.3); /* ゴールド系の輝き */
+
+    --border-radius-md: 12px;
+    --border-radius-sm: 8px;
+    --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.08);
+    --shadow-strong: 0 12px 35px rgba(0, 0, 0, 0.12);
+    --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+/* 吉祥文様風背景 (青海波をモダンにアレンジ) */
+.site-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--color-bg);
+    opacity: 0.5;
+    background-image:
+        radial-gradient(circle at 100% 100%, transparent 20px, var(--color-primary-accent) 21px, var(--color-primary-accent) 23px, transparent 24px),
+        radial-gradient(circle at 0% 100%, transparent 20px, var(--color-primary-accent) 21px, var(--color-primary-accent) 23px, transparent 24px),
+        radial-gradient(circle at 100% 0%, transparent 20px, var(--color-primary-accent) 21px, var(--color-primary-accent) 23px, transparent 24px),
+        radial-gradient(circle at 0% 0%, transparent 20px, var(--color-primary-accent) 21px, var(--color-primary-accent) 23px, transparent 24px);
+    background-size: 60px 60px;
+    filter: blur(1px); /* 少しぼかして上品に */
+}
+
+
 body {
-    font-family: var(--font-main);
-    background-color: var(--background-color);
+    font-family: var(--font-sans);
+    background-color: transparent; /* 背景は.site-backgroundに任せる */
     margin: 0;
-    padding: 20px;
+    padding: 30px 20px; /* 上下にもパディング */
     display: flex;
-    justify-content: center;
-    align-items: flex-start; /* 上寄せに変更 */
+    flex-direction: column; /* ヘッダーとメインコンテンツを縦に */
+    align-items: center;
     min-height: 100vh;
-    color: var(--text-color);
-    line-height: 1.7;
+    color: var(--color-text-main);
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
-    background-color: var(--container-background);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 30px 40px;
+    background-color: var(--color-container-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-strong);
+    border: 1px solid rgba(176, 141, 87, 0.2); /* ゴールド系の薄いボーダー */
+    padding: 30px 40px 40px 40px;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px; /* 少し幅広に */
     text-align: center;
-    animation: fadeIn 1s ease-out;
+    animation: fadeInSite 1s ease-out;
+    position: relative;
+    overflow: hidden; 
+}
+.container::before { /* コンテナ上部のアクセントライン */
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, transparent, var(--color-primary-accent), var(--color-secondary-accent), var(--color-primary-accent), transparent);
+    opacity: 0.8;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes fadeInSite {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .site-header {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--primary-color); /* タイトル下にアクセントライン */
+    margin-bottom: 40px;
+    padding-bottom: 25px;
+    position: relative;
 }
+.header-ornament {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-primary-accent), var(--color-primary-accent), var(--color-primary-accent), transparent);
+    opacity: 0.6;
+    width: 70%;
+    margin: 15px auto;
+}
+.header-ornament.top { margin-bottom: 25px; }
+.header-ornament.bottom { margin-top: 25px; }
 
 .site-title {
-    font-family: var(--font-title);
-    color: var(--primary-color);
-    font-size: 2.8em;
-    margin: 0 0 10px 0;
-    letter-spacing: 1px;
+    font-family: var(--font-serif);
+    color: var(--color-secondary-accent);
+    font-size: 2.8em; /* Shippori Minchoは少し小さめなので調整 */
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    letter-spacing: 2px; /* 文字間隔を広めに */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
 }
-
 .site-subtitle {
     font-size: 1.1em;
-    color: #777;
+    color: var(--color-text-subtle);
     margin: 0;
+    font-style: normal; /* イタリック解除 */
+    font-weight: 500;
 }
 
-.input-area {
+/* 入力セクション */
+.input-section {
+    padding: 30px 20px;
     margin-bottom: 30px;
+    background-color: rgba(248, 245, 240, 0.5); /* 薄い背景 */
+    border-radius: var(--border-radius-sm);
+    animation: fadeInSection 0.8s 0.2s ease-out backwards; /* 遅延開始 */
 }
-
-.input-label {
-    display: block;
-    margin-bottom: 12px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.date-input {
-    padding: 12px 18px;
-    border: 2px solid #ddd;
-    border-radius: var(--border-radius);
-    font-size: 1em;
-    margin-bottom: 25px;
-    width: calc(80% - 36px); /* 幅調整 */
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-    text-align: center;
-}
-
-.date-input:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
-}
-
-.submit-button, .back-button {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: var(--border-radius);
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    letter-spacing: 0.5px;
-}
-
-.submit-button:hover, .back-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.result-area {
-    animation: slideInUp 0.7s ease-out;
-}
-
-@keyframes slideInUp {
-    from { opacity: 0; transform: translateY(30px); }
+@keyframes fadeInSection {
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+.input-title {
+    font-family: var(--font-serif);
+    font-size: 1.8em;
+    color: var(--color-secondary-accent);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+.input-guidance {
+    font-size: 1.05em;
+    color: var(--color-text-subtle);
+    margin-bottom: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /* 要素間の間隔 */
+}
+.date-input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 320px; /* 入力フィールドの最大幅 */
+}
+.input-label { /* フローティングラベル */
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-subtle);
+    background-color: var(--color-container-bg);
+    padding: 0 6px;
+    transition: var(--transition-smooth);
+    pointer-events: none; /* ラベルがクリックイベントを奪わないように */
+    font-size: 1em;
+}
+.date-input {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 1em;
+    font-family: var(--font-sans);
+    color: var(--color-text-main);
+    border: 2px solid rgba(176, 141, 87, 0.4); /* ゴールド系の薄いボーダー */
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-container-bg);
+    transition: var(--transition-smooth);
+    box-sizing: border-box; /* paddingとborderを幅に含める */
+}
+.date-input:focus,
+.date-input:valid { /* :valid を使うことで日付が選択されたらラベルを上げる */
+    border-color: var(--color-primary-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-highlight-glow);
+}
+.date-input:focus + .input-label,
+.date-input:valid + .input-label {
+    top: -10px; /* ラベルを枠の上に移動 */
+    left: 15px;
+    font-size: 0.8em;
+    color: var(--color-primary-accent);
+    font-weight: 500;
+}
+.date-input::-webkit-calendar-picker-indicator { /* カレンダーアイコンのスタイル */
+    opacity: 0.7;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    filter: grayscale(50%) sepia(100%) hue-rotate(-20deg) saturate(300%) brightness(0.8); /* ゴールド風に調整 */
+}
+.date-input:hover::-webkit-calendar-picker-indicator {
+    opacity: 1;
+}
+
+
+.submit-button, .back-button {
+    background: linear-gradient(135deg, var(--color-secondary-accent), #D9534F); /* 赤系のグラデーション */
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: var(--border-radius-sm);
+    font-size: 1.1em;
+    font-weight: 500;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+    letter-spacing: 0.5px;
+    display: inline-flex; /* アイコンとテキストの整列 */
+    align-items: center;
+    justify-content: center;
+    min-width: 220px; /* ボタンの最小幅 */
+}
+.submit-button .button-icon, .back-button .button-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+.star-icon { color: #FFD700; } /* 星アイコンはゴールド */
+.reset-icon { font-weight: bold; }
+
+.submit-button:hover, .back-button:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 7px 18px rgba(192, 57, 43, 0.4);
+    background: linear-gradient(135deg, #D9534F, var(--color-secondary-accent));
+}
+
+/* 結果セクション */
+.result-section {
+    animation: fadeInSection 0.8s ease-out;
+    padding-top: 20px;
+}
 .loading-spinner {
-    border: 6px solid #f3f3f3; /* Light grey */
-    border-top: 6px solid var(--primary-color); /* Blue */
-    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    color: var(--color-text-subtle);
+}
+.spinner-core { /* ローディングスピナー変更 */
     width: 50px;
     height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 30px auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.result-title {
-    font-family: var(--font-title);
-    color: var(--primary-color);
-    font-size: 2.2em;
-    margin-top: 0;
-    margin-bottom: 25px;
-}
-
-/* 2007/1/1 特別メッセージ用 */
-.special-message-20070101 {
-    background-color: #fff9c4; /* 明るい黄色系 */
-    border: 3px dashed var(--secondary-color);
-    padding: 25px;
-    border-radius: var(--border-radius);
-    margin-bottom: 30px;
-    box-shadow: 0 5px 20px rgba(254, 202, 87, 0.3);
-    text-align: left;
-    position: relative;
-    overflow: hidden;
-}
-
-.special-message-header {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: var(--primary-color);
-    text-align: center;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    border-top-color: var(--color-primary-accent);
+    border-right-color: var(--color-primary-accent);
+    animation: spinAdvanced 1s linear infinite, colorPulse 2s ease-in-out infinite alternate;
     margin-bottom: 20px;
 }
+@keyframes spinAdvanced {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+@keyframes colorPulse {
+    0% { border-top-color: var(--color-primary-accent); border-right-color: var(--color-primary-accent); }
+    50% { border-top-color: var(--color-secondary-accent); border-right-color: var(--color-secondary-accent); }
+    100% { border-top-color: var(--color-primary-accent); border-right-color: var(--color-primary-accent); }
+}
+.loading-spinner p { font-size: 1.1em; font-style: italic; font-weight: 500; }
 
-.star-icon {
-    color: var(--secondary-color);
-    animation: starShine 1.5s infinite alternate;
+
+.result-title {
+    font-family: var(--font-serif);
+    color: var(--color-secondary-accent);
+    font-size: 2.2em;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-weight: 700;
 }
 
-@keyframes starShine {
-    from { opacity: 0.5; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1.1); }
+/* 2007/1/1 特別メッセージ (高級感に合わせて調整) */
+.special-message-20070101 {
+    background: linear-gradient(145deg, #fffaf5, #fffefc); /* より淡く上品な背景 */
+    border: 1px solid var(--color-primary-accent); /* 枠線を細く */
+    border-left: 5px solid var(--color-primary-accent);
+    border-radius: var(--border-radius-md);
+    padding: 30px 35px;
+    margin-bottom: 35px;
+    box-shadow: var(--shadow-soft);
+    text-align: left;
+    position: relative;
 }
-
+.special-message-header {
+    font-size: 1.4em;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    color: var(--color-secondary-accent);
+    text-align: center;
+    margin-bottom: 25px;
+}
+.decorative-icon {
+    color: var(--color-primary-accent);
+    font-size: 1.2em;
+    margin: 0 12px;
+    opacity: 0.8;
+}
 .special-text-main, .special-text-conclusion {
-    font-size: 1.05em;
-    line-height: 1.8;
-    margin-bottom: 15px;
-    white-space: pre-wrap; /* 改行を保持 */
+    font-size: 1.05em; /* 本文フォントサイズは読みやすさ重視 */
+    line-height: 1.85;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    color: var(--color-text-main);
 }
-
 .quote-box {
-    background-color: #ffffff;
-    border-left: 5px solid var(--primary-color);
-    padding: 15px 20px;
-    margin: 20px 0;
+    background-color: rgba(176, 141, 87, 0.05); /* ゴールドの薄い背景 */
+    border-left: 3px solid var(--color-primary-accent);
+    padding: 20px;
+    margin: 25px 0;
     font-style: italic;
-    color: #555;
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    color: var(--color-text-subtle);
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 }
-
-.quote-text {
-    white-space: pre-wrap; /* 改行を保持 */
-    margin-bottom: 15px;
-}
-
-.nandeya-container {
-    text-align: right;
-}
-
 .nandeya-highlight {
-    font-size: 1.8em; /* 強調 */
-    font-weight: bold;
-    color: #d32f2f; /* 強い赤 */
-    background-color: rgba(255, 235, 59, 0.7); /* 黄色背景 */
+    font-size: 1.8em; /* 少し調整 */
+    font-weight: 700; /* 太字 */
+    color: #fff;
+    background: var(--color-secondary-accent);
     padding: 8px 15px;
-    border-radius: 8px;
+    border-radius: var(--border-radius-sm);
     display: inline-block;
-    box-shadow: 0 3px 8px rgba(211, 47, 47, 0.3);
-    animation: pulsateNandeya 1s infinite alternate;
-    font-style: normal; /* イタリック解除 */
+    box-shadow: 0 3px 10px rgba(192, 57, 43, 0.5);
+    animation: nandeyaShine 1.5s infinite alternate;
+    font-style: normal;
+    font-family: var(--font-sans); /* 強調部分はゴシックに */
+}
+@keyframes nandeyaShine { /* よりリッチなアニメーション */
+    0% { transform: scale(1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+    50% { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.7); }
+    100% { transform: scale(1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 }
 
-@keyframes pulsateNandeya {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.1); opacity: 1; }
-}
 
 /* 通常メッセージ */
 .normal-message .message-text {
     font-size: 1.15em;
-    line-height: 1.8;
-    color: var(--text-color);
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: var(--border-radius);
-    border-left: 6px solid var(--secondary-color);
+    line-height: 1.85;
+    color: var(--color-text-main);
+    margin-bottom: 35px;
+    padding: 25px 30px;
+    background-color: #fdfaf6; /* わずかに色づいた背景 */
+    border-radius: var(--border-radius-md);
+    border: 1px solid rgba(176, 141, 87, 0.15);
+    border-left: 5px solid var(--color-primary-accent);
+    text-align: left;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.result-separator { /* 区切り線 */
+    text-align: center;
+    margin: 40px auto;
+    width: 80%;
+    position: relative;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(176, 141, 87, 0.5), transparent);
+}
+.ornament-shape { /* 区切り線の中央の飾り */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-container-bg);
+    padding: 0 15px;
+    font-size: 1.3em;
+    color: var(--color-primary-accent);
+}
+
+
+/* ラッキーアイテム セクション */
+.recommended-item-section {
+    margin-top: 35px;
+    padding-top: 30px;
+}
+.recommended-item-title {
+    font-family: var(--font-serif);
+    color: var(--color-secondary-accent);
+    font-size: 1.9em;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+.recommended-item {
+    background: linear-gradient(145deg, #fffefc, #fffaf5);
+    padding: 30px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(176, 141, 87, 0.2);
+    display: flex;
+    align-items: flex-start; /* アイコンとテキストの上端揃え */
     text-align: left;
 }
-
-.recommended-item-section {
-    margin-top: 30px;
-    padding-top: 25px;
-    border-top: 1px dashed #ddd;
+.item-icon-container { /* アイコンのコンテナ */
+    min-width: 50px; /* 幅を確保 */
+    margin-right: 25px;
+    margin-top: 5px; /* 微調整 */
 }
-
-.recommended-item-title {
-    font-family: var(--font-title);
-    color: var(--primary-color);
-    font-size: 1.8em;
-    margin-bottom: 15px;
+.item-main-icon { /* メインのアイテムアイコン */
+    font-size: 2.5em;
+    color: var(--color-primary-accent);
+    text-shadow: 0 0 12px var(--color-highlight-glow);
+    display: inline-block;
+    animation: iconGlow 2s infinite alternate;
 }
-
-.recommended-item {
-    background-color: #e9f5f9; /* やや青みがかった背景 */
-    padding: 20px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+@keyframes iconGlow {
+    from { opacity: 0.7; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1.05); }
 }
-
-.item-name {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #007bff; /* リンクっぽい色 */
+.item-details { flex-grow: 1; }
+.item-category {
+    font-size: 0.9em;
+    color: var(--color-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+.item-name { /* h4 に変更したのでスタイル調整 */
+    font-size: 1.3em;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    color: var(--color-primary-accent);
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
-
-.item-description {
-    font-size: 0.95em;
-    color: #555;
-    margin-bottom: 15px;
-    max-height: 100px; /* 説明文の最大高さ */
-    overflow-y: auto; /* 長い場合にスクロール */
+.item-fortune-message {
+    font-size: 1.05em;
+    color: var(--color-text-main);
+    margin-bottom: 20px;
+    line-height: 1.8;
 }
-
 .item-link {
     display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 8px 15px;
+    background: var(--color-primary-accent);
+    color: #fff;
+    padding: 10px 22px;
     text-decoration: none;
-    border-radius: 6px;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    box-shadow: 0 3px 8px rgba(176, 141, 87, 0.3);
 }
-
 .item-link:hover {
-    background-color: #0056b3;
+    background: #A07D47; /* 少し暗いゴールド */
+    box-shadow: 0 5px 12px rgba(176, 141, 87, 0.4);
+    transform: translateY(-1px);
 }
 
 
 .site-footer {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-    color: #888;
+    margin-top: 45px;
+    padding-top: 25px;
+    color: var(--color-text-subtle);
     font-size: 0.9em;
+    position: relative;
+}
+.footer-ornament {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(176, 141, 87, 0.4), transparent);
+    margin: 0 auto 20px auto;
+    width: 50%;
 }
 
-/* スマホ対応 */
+/* スマホ対応調整 */
 @media (max-width: 768px) {
-    body {
-        padding: 15px;
-    }
-    .container {
-        padding: 20px 25px;
-    }
-
-    .site-title {
-        font-size: 2.2em;
-    }
-    .site-subtitle {
-        font-size: 1em;
-    }
-
-    .input-label {
-        font-size: 1.1em;
-    }
-    .date-input {
-        padding: 10px 15px;
-        font-size: 0.95em;
-        width: calc(90% - 30px);
-    }
-    .submit-button, .back-button {
-        padding: 12px 25px;
-        font-size: 1em;
-    }
-
-    .result-title {
-        font-size: 1.8em;
-    }
-    .special-message-header {
-        font-size: 1.2em;
-    }
-    .special-text-main, .special-text-conclusion, .normal-message .message-text {
-        font-size: 1em;
-    }
-    .nandeya-highlight {
-        font-size: 1.5em;
-        padding: 6px 12px;
-    }
-    .recommended-item-title {
-        font-size: 1.5em;
-    }
-    .item-name {
-        font-size: 1.1em;
-    }
-    .item-description {
-        font-size: 0.9em;
-    }
+    body { padding: 20px 15px; }
+    .container { padding: 25px 30px; }
+    .site-title { font-size: 2.2em; } /* Shippori Minchoは少し小さめなので調整 */
+    .site-subtitle { font-size: 1em; }
+    .input-title { font-size: 1.6em; }
+    .input-guidance { font-size: 1em; }
+    .date-input-wrapper { max-width: 280px; }
+    .submit-button, .back-button { padding: 14px 25px; font-size: 1em; min-width: 200px; }
+    .result-title { font-size: 1.9em; }
+    .special-message-header { font-size: 1.3em; }
+    .special-text-main, .special-text-conclusion, .normal-message .message-text { font-size: 1em; }
+    .nandeya-highlight { font-size: 1.5em; padding: 7px 13px; }
+    .recommended-item-title { font-size: 1.6em; }
+    .item-main-icon { font-size: 2.2em; }
+    .item-name { font-size: 1.2em; }
+    .item-fortune-message { font-size: 1em; }
+}
+@media (max-width: 480px) {
+    body { padding: 15px 10px; }
+    .container { padding: 20px 15px; }
+    .site-title { font-size: 1.9em; } /* Shippori Minchoは少し小さめなので調整 */
+    .input-title { font-size: 1.4em; }
+    .date-input-wrapper { max-width: 100%; } /* スマホでは幅いっぱい */
+    .date-input:focus + .input-label,
+    .date-input:valid + .input-label { font-size: 0.75em; }
+    .special-message-20070101 { padding: 20px; }
+    .quote-box { padding: 15px; }
+    .recommended-item { flex-direction: column; align-items: center; text-align: center; }
+    .item-icon-container { margin-right: 0; margin-bottom: 15px; }
+    .item-details { width: 100%; }
 }
